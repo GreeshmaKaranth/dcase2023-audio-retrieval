@@ -1,6 +1,6 @@
-trial_series: YOUR_OUTPUT_DIR
+trial_series: /content/dcase2023-audio-retrieval/output/
 
-trial_base: YOUR_OUTPUT_PATH
+trial_base: /content/dcase2023-audio-retrieval/output/
 
 
 # Configure ray-tune clusters
@@ -25,21 +25,21 @@ ray_conf:
 # Configure training, validation, and evaluation data
 data_conf:
     train_data: # training data
-        dataset: YOUR_DATA_PATH/Clotho
+        dataset: /content/dcase2023-audio-retrieval/data/Clotho/
         audio_data: development_audio_logmels.hdf5
         text_data: development_text.csv
         text_embeds: sbert_embeds.pkl
         text_level: sentence
 
     val_data: # validation data
-        dataset: YOUR_DATA_PATH/Clotho
+        dataset: /content/dcase2023-audio-retrieval/data/Clotho/
         audio_data: validation_audio_logmels.hdf5
         text_data: validation_text.csv
         text_embeds: sbert_embeds.pkl
         text_level: sentence
 
     eval_data: # evaluation data
-        dataset: YOUR_DATA_PATH/Clotho
+        dataset: /content/dcase2023-audio-retrieval/data/Clotho/
         audio_data: evaluation_audio_logmels.hdf5
         text_data: evaluation_text.csv
         text_embeds: sbert_embeds.pkl
@@ -64,7 +64,7 @@ DualEncoderModel:
     audio_enc:
         name: CNN14Encoder
         init: prior
-        weight: YOUR_DATA_PATH/pretrained_models/CNN14_300.pth
+        weight: /content/dcase2023-audio-retrieval/data/pretrained_models/CNN14_300.pth
         trainable: true
         out_dim: 300
 

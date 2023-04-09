@@ -3,14 +3,21 @@ import pickle
 
 import pandas as pd
 from sentence_transformers import SentenceTransformer
+from transformers import XLNetTokenizer, XLNetModel
 
 global_params = {
-    "dataset_dir": "~/Clotho",
+    "dataset_dir": "/content/dcase2023-audio-retrieval/data/Clotho",
     "audio_splits": ["development", "validation", "evaluation"]
 }
 
-model_name = "sbert"
-model = SentenceTransformer('all-mpnet-base-v2')  # 768-dimensional embeddings
+# model_name = "sbert"
+# model = SentenceTransformer('all-mpnet-base-v2')  # 768-dimensional embeddings
+
+
+model_name = "xlnet"
+tokenizer = XLNetTokenizer.from_pretrained("xlnet-base-cased")
+model = XLNetModel.from_pretrained("xlnet-base-cased")
+
 
 # %%
 
@@ -27,7 +34,10 @@ for split in global_params["audio_splits"]:
 
         print(split, tid, raw_text)
 
-        text_embeds[tid] = model.encode(raw_text)
+        # text_embeds[tid] = model.encode(raw_text)
+        inputs = tokenizer(raw_text, return_tensors="pt")
+        text_embeds[tid] = model(**inputs)
+
 
 # Save text embeddings
 embed_fpath = os.path.join(global_params["dataset_dir"], f"{model_name}_embeds.pkl")
